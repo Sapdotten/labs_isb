@@ -76,4 +76,4 @@ def decode(text: str, key: str) -> str:
 
 with open("src_text.txt", 'r', encoding='utf-8') as f:
     text = f.read()
-decode(make_reshuffle(text, "A very very long key for encoding"), "A very very long key for encoding")
+decode(make_reshuffle("В торговом центре Москвы произошел терракт: в здание ворвались террористы.", "A very very long key for encoding"), "A very very long key for encoding")
