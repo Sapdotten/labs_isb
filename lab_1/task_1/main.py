@@ -1,6 +1,6 @@
 from typing import Union
 from copy import copy
-import constants as consts
+from constants import *
 
 
 def read_text(file_path: str) -> Union[str, None]:
@@ -123,31 +123,35 @@ def write_text_to_file(text: str, file_path: str) -> None:
         f.write(text)
 
 
-def test_encoding():
-    text = read_text(consts.SRC_TEXT_FILE)
+def encoding():
+    text = read_text(SRC_TEXT_FILE)
     if text is None:
         print("Can't read the file")
         return None
-    code = RouteTransposition('SomeEncodingKey', 4)
+    print("Src text: ")
+    print(text)
+    code = RouteTransposition(ENCODING_KEY, TABLE_HEIGHT)
     text = code.encode(text)
-    write_text_to_file(text, consts.POINT_TEXT_FILE)
+    write_text_to_file(text, POINT_TEXT_FILE)
+    print("\nEncoded text: ")
+    print(text)
 
 
-def test_decoding():
-    text = read_text(consts.POINT_TEXT_FILE)
+def decoding():
+    text = read_text(POINT_TEXT_FILE)
     if text is None:
         print("Can't read the file")
         return None
-    code = RouteTransposition('SomeEncodingKey', 4)
+    code = RouteTransposition(ENCODING_KEY, TABLE_HEIGHT)
     try:
         text = code.decode(text)
     except RuntimeError as err:
         print(err)
     else:
-        print('Decoded test after encoding: ')
+        print('\nDecoded test after encoding: ')
         print(text)
 
 
 if __name__ == '__main__':
-    test_encoding()
-    test_decoding()
+    encoding()
+    decoding()

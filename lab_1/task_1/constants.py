@@ -6,3 +6,5 @@ STANDART_FREQUENSES = {'О': 0.096456, 'И': 0.075312, 'Е': 0.072292, 'А': 0.0
                         'Э': 0.002416, 'Ъ': 0.0, ' ': 0.128675}
 SRC_TEXT_FILE = "src_text.txt"
 POINT_TEXT_FILE = "encdoded_text.txt"
+ENCODING_KEY = 'SomeEncodingKey'
+TABLE_HEIGHT = 4
