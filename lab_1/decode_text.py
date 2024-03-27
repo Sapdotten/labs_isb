@@ -1,10 +1,11 @@
 import copy
-
+from collections import Counter
 text = ""
 with open("cod9.txt", 'r') as f:
     text = f.read()
 src_text = copy.copy(text)
 print(text)
+print("The counter says: ", dict(Counter(text)))
 symbols_count = {}
 for symb in text:
     if symb in symbols_count.keys():
