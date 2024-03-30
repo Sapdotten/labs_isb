@@ -123,26 +123,37 @@ def write_text_to_file(text: str, file_path: str) -> None:
         f.write(text)
 
 
-def encoding():
+def encoding(key: str):
+    """
+    The solving of task 1
+    :param key: key for encoding
+    :return:
+    """
     text = read_text(SRC_TEXT_FILE)
     if text is None:
         print("Can't read the file")
         return None
     print("Src text: ")
     print(text)
-    code = RouteTransposition(ENCODING_KEY, TABLE_HEIGHT)
+    code = RouteTransposition(key, TABLE_HEIGHT)
     text = code.encode(text)
     write_text_to_file(text, POINT_TEXT_FILE)
     print("\nEncoded text: ")
     print(text)
 
 
-def decoding():
+def decoding(key: str) -> None:
+    """
+    The decoding of encoded text
+    :param key: key for encdoing
+    :return: None
+    """
     text = read_text(POINT_TEXT_FILE)
+
     if text is None:
         print("Can't read the file")
         return None
-    code = RouteTransposition(ENCODING_KEY, TABLE_HEIGHT)
+    code = RouteTransposition(key, TABLE_HEIGHT)
     try:
         text = code.decode(text)
     except RuntimeError as err:
@@ -153,5 +164,6 @@ def decoding():
 
 
 if __name__ == '__main__':
-    encoding()
-    decoding()
+    encoding_key = 'SomeEncodingKey'
+    encoding(encoding_key)
+    decoding(encoding_key)
