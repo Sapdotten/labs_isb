@@ -1,5 +1,5 @@
 from typing import Union
-from constants import STANDART_FREQUENSES
+from constants import *
 from collections import Counter
 from copy import copy
 
@@ -97,8 +97,15 @@ class Decode:
             res += f"{key} = {self.decode_dict[key]}\n"
         return res
 
-if __name__ == '__main__':
-    text = read_text("cod9.txt")
+
+def task() -> None:
+    """
+    The solving of a task
+    :return: None
+    """
+    text = read_text(SRC_TEXT_FILE)
+    if text is None:
+        return None
     decode = Decode(text)
     print(decode.decode_text(), '\n')
     decode.correct_decode_dict('АДМИСИТНРАНИВСЗМИ', 'АДМИНИСТРАТИВНЫМИ')
@@ -116,5 +123,9 @@ if __name__ == '__main__':
     decode.correct_decode_dict('ЪТАП', 'ЭТАП')
     print(decode.decode_text(), '\n')
     dict_describe = decode.get_decode_key()
-    save_text_to_file(decode.translated_text, 'decoded_text.txt')
-    save_text_to_file(dict_describe, 'key.txt')
+    save_text_to_file(decode.translated_text, POINT_TEXT_FILE)
+    save_text_to_file(dict_describe, KEY_TEXT_FILE)
+
+
+if __name__ == '__main__':
+    task()
