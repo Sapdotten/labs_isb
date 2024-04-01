@@ -112,15 +112,19 @@ class RouteTransposition:
         return res
 
 
-def write_text_to_file(text: str, file_path: str) -> None:
+def save_text_to_file(text: str, file_path: str) -> bool:
     """
-    Writes text to the file
-    :param text: text
-    :param file_path: path to file for write
-    :return: None
+    Saves a text to the file
+    :param text: text to save
+    :param file_path: path to file
+    :return: True if text has been saved, False else
     """
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.write(text)
+    try:
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(text)
+        return True
+    except FileNotFoundError:
+        return False
 
 
 def encoding(key: str):
@@ -137,7 +141,8 @@ def encoding(key: str):
     print(text)
     code = RouteTransposition(key, TABLE_HEIGHT)
     text = code.encode(text)
-    write_text_to_file(text, POINT_TEXT_FILE)
+    if not save_text_to_file(text, POINT_TEXT_FILE):
+        print("Encoded text was not saved to the file.")
     print("\nEncoded text: ")
     print(text)
 

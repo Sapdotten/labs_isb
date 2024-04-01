@@ -19,15 +19,19 @@ def read_text(file_path: str) -> Union[str, None]:
         return None
 
 
-def save_text_to_file(text: str, file_path: str) -> None:
+def save_text_to_file(text: str, file_path: str) -> bool:
     """
     Saves a text to the file
     :param text: text to save
     :param file_path: path to file
-    :return: None
+    :return: True if text has been saved, False else
     """
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.write(text)
+    try:
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(text)
+        return True
+    except FileNotFoundError:
+        return False
 
 
 def get_ordered_letters(frequenses: Union[dict[str, float], Counter]) -> list[str]:
@@ -123,8 +127,10 @@ def task() -> None:
     decode.correct_decode_dict('ЪТАП', 'ЭТАП')
     print(decode.decode_text(), '\n')
     dict_describe = decode.get_decode_key()
-    save_text_to_file(decode.translated_text, POINT_TEXT_FILE)
-    save_text_to_file(dict_describe, KEY_TEXT_FILE)
+    if not save_text_to_file(decode.translated_text, POINT_TEXT_FILE):
+        print("Decoded text was not saved to the file.")
+    if not save_text_to_file(dict_describe, KEY_TEXT_FILE):
+        print("Key was not saved to the file")
 
 
 if __name__ == '__main__':
