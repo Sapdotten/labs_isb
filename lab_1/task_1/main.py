@@ -1,6 +1,6 @@
 from typing import Union
 from copy import copy
-from constants import *
+import constants
 
 
 def read_text(file_path: str) -> Union[str, None]:
@@ -133,15 +133,15 @@ def encoding(key: str):
     :param key: key for encoding
     :return:
     """
-    text = read_text(SRC_TEXT_FILE)
+    text = read_text(constants.SRC_TEXT_FILE)
     if text is None:
         print("Can't read the file")
         return None
     print("Src text: ")
     print(text)
-    code = RouteTransposition(key, TABLE_HEIGHT)
+    code = RouteTransposition(key, constants.TABLE_HEIGHT)
     text = code.encode(text)
-    if not save_text_to_file(text, POINT_TEXT_FILE):
+    if not save_text_to_file(text, constants.POINT_TEXT_FILE):
         print("Encoded text was not saved to the file.")
     print("\nEncoded text: ")
     print(text)
@@ -153,12 +153,12 @@ def decoding(key: str) -> None:
     :param key: key for encdoing
     :return: None
     """
-    text = read_text(POINT_TEXT_FILE)
+    text = read_text(constants.POINT_TEXT_FILE)
 
     if text is None:
         print("Can't read the file")
         return None
-    code = RouteTransposition(key, TABLE_HEIGHT)
+    code = RouteTransposition(key, constants.TABLE_HEIGHT)
     try:
         text = code.decode(text)
     except RuntimeError as err:
@@ -169,6 +169,9 @@ def decoding(key: str) -> None:
 
 
 if __name__ == '__main__':
-    encoding_key = 'SomeEncodingKey'
-    encoding(encoding_key)
-    decoding(encoding_key)
+    encoding_key = read_text(constants.KEY_FILE)
+    if encoding_key is None:
+        print("Unable to read file with key...")
+    else:
+        encoding(encoding_key)
+        decoding(encoding_key)

@@ -1,5 +1,5 @@
 from typing import Union
-from constants import *
+import constants
 from collections import Counter
 from copy import copy
 
@@ -45,7 +45,7 @@ def get_ordered_letters(frequenses: Union[dict[str, float], Counter]) -> list[st
 
 
 class Decode:
-    STANDART_ORDERED_LETTERS = get_ordered_letters(STANDART_FREQUENSES)
+    STANDART_ORDERED_LETTERS = get_ordered_letters(constants.STANDART_FREQUENSES)
 
     def __init__(self, text):
         """
@@ -107,7 +107,7 @@ def task() -> None:
     The solving of a task
     :return: None
     """
-    text = read_text(SRC_TEXT_FILE)
+    text = read_text(constants.SRC_TEXT_FILE)
     if text is None:
         return None
     decode = Decode(text)
@@ -127,9 +127,9 @@ def task() -> None:
     decode.correct_decode_dict('ЪТАП', 'ЭТАП')
     print(decode.decode_text(), '\n')
     dict_describe = decode.get_decode_key()
-    if not save_text_to_file(decode.translated_text, POINT_TEXT_FILE):
+    if not save_text_to_file(decode.translated_text, constants.POINT_TEXT_FILE):
         print("Decoded text was not saved to the file.")
-    if not save_text_to_file(dict_describe, KEY_TEXT_FILE):
+    if not save_text_to_file(dict_describe, constants.KEY_TEXT_FILE):
         print("Key was not saved to the file")
 
 
