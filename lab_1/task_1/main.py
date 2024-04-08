@@ -59,7 +59,7 @@ class RouteTransposition:
         sort_list = sorted(sort_list, key=lambda k: self.key[k])
         return sort_list
 
-    def _encode(self, text: str) -> str:
+    def encode_prepared_text(self, text: str) -> str:
         """
         Encoding prepared text
         :param text: prepared text
@@ -79,14 +79,14 @@ class RouteTransposition:
                 res += table[i]
         return res
 
-    def encode(self, text: str) -> str:
+    def encode_unprepared_text(self, text: str) -> str:
         """
         Encoding text
         :param text: text for encoding
         :return: encoded text
         """
         text = self._prepare_text(text)
-        return self._encode(text)
+        return self.encode_prepared_text(text)
 
     def decode(self, text: str):
         """
@@ -140,7 +140,7 @@ def encoding(key: str):
     print("Src text: ")
     print(text)
     code = RouteTransposition(key, constants.TABLE_HEIGHT)
-    text = code.encode(text)
+    text = code.encode_unprepared_text(text)
     if not save_text_to_file(text, constants.POINT_TEXT_FILE):
         print("Encoded text was not saved to the file.")
     print("\nEncoded text: ")
