@@ -52,10 +52,10 @@ class Decode:
         :param text: encoded text
         """
         self.src_text = text
-        self.decode_dict = self._make_decode_dict(get_ordered_letters(Counter(text)))
+        self.decode_dict = self.make_decode_dict(get_ordered_letters(Counter(text)))
         self.translated_text = text
 
-    def _make_decode_dict(self, ordered_letters) -> dict[str, str]:
+    def make_decode_dict(self, ordered_letters) -> dict[str, str]:
         """
         Makes a dict where key is the symbol of source text and value is the true symbol for this one
         :param ordered_letters: list of letters of source text ordered by their frequenses

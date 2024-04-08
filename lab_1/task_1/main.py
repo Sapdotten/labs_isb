@@ -24,11 +24,11 @@ class RouteTransposition:
         :param key: key for encoding/decoding text
         :param table_height: height of coding table
         """
-        self.key = self._process_key(key)
+        self.key = self.process_key(key)
         self.height = table_height
         self.width = len(self.key)
 
-    def _process_key(self, key: str) -> str:
+    def process_key(self, key: str) -> str:
         """
         Process the key by deleting excess symbols
         :param key: unprepared key
@@ -36,7 +36,7 @@ class RouteTransposition:
         """
         return "".join(c for c in key if c.isalpha())
 
-    def _prepare_text(self, src_text: str) -> str:
+    def prepare_text(self, src_text: str) -> str:
         """
         Preparing text for encoding by making it even encoding table size
         :param src_text: source not encoded text
@@ -50,7 +50,7 @@ class RouteTransposition:
             text += src_text[:((self.width * self.height) - (len(text) % (self.height * self.width)))]
         return text
 
-    def _get_reshuffle_order(self) -> list[int]:
+    def get_reshuffle_order(self) -> list[int]:
         """
         Returns an order of reshuffle columns in encoding table
         :return: order of columns as list
@@ -65,7 +65,7 @@ class RouteTransposition:
         :param text: prepared text
         :return: encoding text
         """
-        order = self._get_reshuffle_order()
+        order = self.get_reshuffle_order()
         res = ""
         while len(text) > 0:
             table = []
@@ -85,7 +85,7 @@ class RouteTransposition:
         :param text: text for encoding
         :return: encoded text
         """
-        text = self._prepare_text(text)
+        text = self.prepare_text(text)
         return self.encode_prepared_text(text)
 
     def decode(self, text: str):
@@ -96,7 +96,7 @@ class RouteTransposition:
         """
         if len(text) % (self.width * self.height) != 0:
             raise RuntimeError("Encdoded text has invalid length")
-        old_order = self._get_reshuffle_order()
+        old_order = self.get_reshuffle_order()
         new_order = sorted(old_order, key=lambda k: old_order[k])
         res = ""
         while len(text) > 0:
