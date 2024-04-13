@@ -1,5 +1,7 @@
 import math
 import mpmath
+from typing import Union
+import consts
 
 
 def frequency_bitwise_test(sequence: str) -> float:
@@ -77,5 +79,72 @@ def longest_ones_sequence_test(sequence: str) -> float:
     return P
 
 
+def read_sequence_from_file(path: str) -> Union[str, None]:
+    """
+    Reads a sequence from file
+    :param path: path to file
+    :return: sequense as str or None if can't open file
+    """
+    try:
+        with open(path, 'r') as f:
+            text = f.read()
+        return text
+    except FileNotFoundError:
+        return None
+
+
+def sequense_test(lang: str, path_to_sequence: str) -> Union[str, None]:
+    """
+    Tests sequence with 3 tests
+    :param lang: name of language sequence from
+    :param path_to_sequence: path to file with saved sequence
+    :return: result of tests as str or None if there is any error
+    """
+    sequence = read_sequence_from_file(path_to_sequence)
+    if sequence is None:
+        return None
+    test1 = frequency_bitwise_test(sequence)
+    test2 = same_bits_test(sequence)
+    test3 = longest_ones_sequence_test(sequence)
+    return f"{lang} frequency bitwise test: {test1}\n" \
+           f"{lang} same consecutive bits: {test2}\n" \
+           f"{lang} longest sequence of units in a block test: {test3}\n"
+
+
+def save_text_to_file(text: str, path: str) -> bool:
+    """
+    Saves the text to file
+    :param text: text to save
+    :param path: path to file
+    :return: true if success, false else
+    """
+    try:
+        with open(path, 'w') as f:
+            f.write(text)
+        return True
+    except FileNotFoundError:
+        return False
+
+def task_2() -> None:
+    """
+    Task 2
+    :return: None
+    """
+    cpp_test = sequense_test('Cpp', consts.CPP_SEQUENCE_FILE)
+    if cpp_test is None:
+        print("Can't open file with cpp secuence")
+        return None
+    java_test = sequense_test('Java', consts.JAVA_SEQUENCE_FILE)
+    if java_test is None:
+        print("Can't open file with java secuence")
+        return None
+    result = java_test + cpp_test
+    print(f'result is \n{result}')
+    if save_text_to_file(result, consts.RESULT_FILE):
+        print(f'Result has been writen to the file')
+    else:
+        print("Can't open file to save result")
+
+
 if __name__ == '__main__':
-    pass
+    task_2()
