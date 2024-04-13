@@ -1,0 +1,4 @@
+cpp_sequence_file: ../task_1/random_sequence_cpp.txt
+java_sequence_file: ../task_1/random_sequence_java.txt
+result_file: result.txt
+
