@@ -1,0 +1,6 @@
+Java frequency bitwise test: 1.0
+Java same consecutive bits: 0.7236736098317631
+Java longest sequence of units in a block test: 0.14320861006998475
+Cpp frequency bitwise test: 1.0
+Cpp same consecutive bits: 0.1572992070502851
+Cpp longest sequence of units in a block test: 0.4210528964926948
