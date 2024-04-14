@@ -1,7 +1,7 @@
 import math
 import consts
-from scipy.special import gammainc
 from typing import Union
+from scipy.special import gammainc
 
 
 def frequency_bitwise_test(sequence: str) -> float:
