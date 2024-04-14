@@ -1,7 +1,7 @@
 import math
-import mpmath
-from typing import Union
 import consts
+from scipy.special import gammainc
+from typing import Union
 
 
 def frequency_bitwise_test(sequence: str) -> float:
@@ -57,12 +57,11 @@ def longest_ones_sequence_test(sequence: str) -> float:
     for block in range(0, int(len(sequence) / block_lenght)):
         max_len = 0
         curr_len = 0
-        for i in range(block, block + block_lenght):
+        for i in range(block * 8, block * 8 + block_lenght):
             if sequence[i] == '1':
                 curr_len += 1
+                max_len = max(max_len, curr_len)
             else:
-                if curr_len > max_len:
-                    max_len = curr_len
                 curr_len = 0
         if max_len <= 1:
             v[0] += 1
@@ -72,10 +71,9 @@ def longest_ones_sequence_test(sequence: str) -> float:
             v[2] += 1
         else:
             v[3] += 1
-
     for i in range(0, len(v)):
-        hi_2 += ((v[i] - 16 * pi[i]) ** 2 / (16 * pi[i]))
-    P = mpmath.gammainc(3 / 2, hi_2 / 2)
+        hi_2 += (pow(v[i] - 16 * pi[i], 2)) / (16 * pi[i])
+    P = gammainc(3 / 2, (hi_2 / 2))
     return P
 
 
@@ -124,6 +122,7 @@ def save_text_to_file(text: str, path: str) -> bool:
         return True
     except FileNotFoundError:
         return False
+
 
 def task_2() -> None:
     """
