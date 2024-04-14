@@ -51,7 +51,6 @@ def longest_ones_sequence_test(sequence: str) -> float:
     :return: P value
     """
     block_lenght = 8
-    pi = [0.2148, 0.3672, 0.2305, 0.1875]
     v = [0, 0, 0, 0]
     hi_2 = 0
     for block in range(0, int(len(sequence) / block_lenght)):
@@ -72,7 +71,7 @@ def longest_ones_sequence_test(sequence: str) -> float:
         else:
             v[3] += 1
     for i in range(0, len(v)):
-        hi_2 += (pow(v[i] - 16 * pi[i], 2)) / (16 * pi[i])
+        hi_2 += (pow(v[i] - 16 * consts.PI[i], 2)) / (16 * consts.PI[i])
     P = gammainc(3 / 2, (hi_2 / 2))
     return P
 
