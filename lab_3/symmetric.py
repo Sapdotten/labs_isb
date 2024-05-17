@@ -27,7 +27,7 @@ class SymmetricEncryption:
         if length not in [128, 192, 256]:
             raise ValueError("Incorrect value of length: it must be 128, 192 or 256")
         try:
-            self.key = os.urandom(length)
+            self.key = os.urandom(length//8)
         except Exception as e:
             logging.error(f"Fail try to generate symmetric key: {e}")
 
@@ -48,7 +48,7 @@ class SymmetricEncryption:
         """
         try:
             data = bytes(data, cls.ENCODING)
-            padder = padding.ANSIX923(len(key)).padder()
+            padder = padding.ANSIX923(len(key)*8).padder()
             padded_data = padder.update(data) + padder.finalize()
         except Exception as e:
             logging.error(f"Error in padding data: {e}")
@@ -74,7 +74,7 @@ class SymmetricEncryption:
             decryptor = cipher.decryptor()
             d_data = decryptor.update(data[:-cls.INIT_BLOCK_MODE_LEN]) + decryptor.finalize()
 
-            unpadder = padding.ANSIX923(len(key)).unpadder()
+            unpadder = padding.ANSIX923(len(key)*8).unpadder()
             return (unpadder.update(d_data) + unpadder.finalize()).decode(cls.ENCODING)
         except Exception as e:
             logging.error(f"Error in process of symmetric decrypting data: {e}")

@@ -2,20 +2,22 @@ import logging
 from typing import Union
 import json
 
+
 class FileService:
     """
     A class for working with files, reading data from them and writing
     """
+    ENCODING = 'UTF-8'
 
-    @staticmethod
-    def read_txt(path: str) -> Union[None, str]:
+    @classmethod
+    def read_txt(cls, path: str) -> Union[None, str]:
         """
         Read .txt files
         :param path: path to file
         :return: text from file, None if error
         """
         try:
-            with open(path, 'r') as file:
+            with open(path, 'r', encoding=cls.ENCODING) as file:
                 text = file.read()
             return text
         except FileNotFoundError:
@@ -24,15 +26,15 @@ class FileService:
             logging.error(f"Error in try of reading file: {e}")
         return None
 
-    @staticmethod
-    def write_txt(path: str, data: str):
+    @classmethod
+    def write_txt(cls, path: str, data: str):
         """
         Writes data to .txt file
         :param path: path to file
         :param data: data
         """
         try:
-            with open(path, 'w') as file:
+            with open(path, 'w', encoding=cls.ENCODING) as file:
                 file.write(data)
         except Exception as e:
             logging.error(f"Error in try save data to file: {e}")
