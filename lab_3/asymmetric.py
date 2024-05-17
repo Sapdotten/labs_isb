@@ -6,9 +6,9 @@ from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives.serialization import load_pem_public_key, load_pem_private_key
 
 
-class AssymerticEncryption:
+class AsymerticEncryption:
     """
-    Class for assymtric encryption
+    Class for asymmetric encryption
     """
     private_key = None
     public_key = None
@@ -31,7 +31,7 @@ class AssymerticEncryption:
 
     def generate_keys(self, length: int):
         """
-        Generates keys for assymetric encrytpion
+        Generates keys for asymmetric encrytpion
         :param length: length of key
         """
         try:
@@ -42,14 +42,14 @@ class AssymerticEncryption:
             self.private_key = keys
             self.public_key = keys.public_key()
         except Exception as e:
-            logging.error(f"Error in generating assymetric keys: {e}")
+            logging.error(f"Error in generating asymmetric keys: {e}")
 
     @staticmethod
     def encrypt_data(key: bytes, data: bytes) -> Union[bytes, None]:
         """
-        Encrypts a data using assymetric algorithm
-        :param key: public key in bytes for assymetric encrytpion
-        :param data: data for assymetric encryption
+        Encrypts a data using asymmetric algorithm
+        :param key: public key in bytes for asymmetric encrytpion
+        :param data: data for asymmetric encryption
         :return: encoded data, None if error
         """
         try:
@@ -69,7 +69,7 @@ class AssymerticEncryption:
     @staticmethod
     def decrypt_data(key: bytes, data: bytes) -> Union[bytes, None]:
         """
-        Decrypts a data using assymetric algorithm
+        Decrypts a data using asymmetric algorithm
         :param key: private key in bytes for decrypting
         :param data: encrypted data
         :return: decrypted data, None if error
