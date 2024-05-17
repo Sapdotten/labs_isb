@@ -1,11 +1,9 @@
-import argparse
 import logging
-from typing import Union
 
-from hybrid_system import HybridSystem
-from file_service import FileService
-from args_parsing import config_argparse
 import consts
+from args_parsing import config_argparse
+from file_service import FileService
+from hybrid_system import HybridSystem
 
 if __name__ == '__main__':
     settings = FileService.read_json(consts.SETTINGS)
