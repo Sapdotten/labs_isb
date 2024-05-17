@@ -8,6 +8,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
 class SymmetricEncryption:
     INIT_BLOCK_MODE_LEN = 16
+    ENCODING = 'UTF-8'
     key = None
     key_path = None
 
@@ -38,7 +39,7 @@ class SymmetricEncryption:
         return self.key
 
     @classmethod
-    def encrypt_data(cls, key: bytes, data: bytes) -> Union[bytes, None]:
+    def encrypt_data(cls, key: bytes, data: str) -> Union[bytes, None]:
         """
         Encrypts a data using symmetric algorithm
         :param key: public key in bytes for symmetric encrytpion
@@ -46,6 +47,7 @@ class SymmetricEncryption:
         :return: encoded data, None if error
         """
         try:
+            data = bytes(data, cls.ENCODING)
             padder = padding.ANSIX923(len(key)).padder()
             padded_data = padder.update(data) + padder.finalize()
         except Exception as e:
@@ -59,8 +61,8 @@ class SymmetricEncryption:
         except Exception as e:
             logging.error(f"Error in encrypting data by symmetric key: {e}")
 
-    @staticmethod
-    def decrypt_data(key: bytes, data: bytes) -> Union[bytes, None]:
+    @classmethod
+    def decrypt_data(cls, key: bytes, data: bytes) -> Union[str, None]:
         """
         Decrypts data that was encrypted by symmetric encryption
         :param key: symmetric key
@@ -68,12 +70,12 @@ class SymmetricEncryption:
         :return: decrypted data
         """
         try:
-            cipher = Cipher(algorithms.AES(key), modes.CBC(data[-16:]))
+            cipher = Cipher(algorithms.AES(key), modes.CBC(data[-cls.INIT_BLOCK_MODE_LEN:]))
             decryptor = cipher.decryptor()
-            d_data = decryptor.update(data[:-16]) + decryptor.finalize()
+            d_data = decryptor.update(data[:-cls.INIT_BLOCK_MODE_LEN]) + decryptor.finalize()
 
             unpadder = padding.ANSIX923(len(key)).unpadder()
-            return unpadder.update(d_data) + unpadder.finalize()
+            return (unpadder.update(d_data) + unpadder.finalize()).decode(cls.ENCODING)
         except Exception as e:
             logging.error(f"Error in process of symmetric decrypting data: {e}")
             return None
