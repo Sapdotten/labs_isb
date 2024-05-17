@@ -1,6 +1,6 @@
 import logging
 from typing import Union
-
+import json
 
 class FileService:
     """
@@ -66,3 +66,18 @@ class FileService:
                 file.write(data)
         except Exception as e:
             logging.error(f"Error in try save data to file: {e}")
+
+    @staticmethod
+    def read_json(path: str) -> Union[dict, None]:
+        """
+        Reads json file
+        :param path: path to json file
+        :return: dict with data or None, if error
+        """
+        try:
+            with open(path, 'r') as file:
+                data = json.load(file)
+            return data
+        except Exception as e:
+            logging.error(f"Error in try to read json file: {e}")
+            return None
