@@ -10,7 +10,6 @@ class SymmetricEncryption:
     INIT_BLOCK_MODE_LEN = 16
     key = None
     key_path = None
-    key_len = None
 
     def set_key_path(self, path: str):
         """
