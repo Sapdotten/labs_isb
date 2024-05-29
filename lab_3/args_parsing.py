@@ -1,8 +1,7 @@
 import argparse
-from argparse import Namespace
 
 
-def config_argparse(settings: dict) -> Namespace:
+def config_argparse(settings: dict) -> argparse.Namespace:
     """
     Configs args for console
     :param settings: dict with default settings

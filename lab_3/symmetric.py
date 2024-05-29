@@ -3,7 +3,11 @@ import os
 from typing import Union
 
 from cryptography.hazmat.primitives import padding
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives.ciphers import (
+    Cipher,
+    algorithms,
+    modes,
+)
 
 
 class SymmetricEncryption:
@@ -26,10 +30,7 @@ class SymmetricEncryption:
         """
         if length not in [128, 192, 256]:
             raise ValueError("Incorrect value of length: it must be 128, 192 or 256")
-        try:
-            self.key = os.urandom(length // 8)
-        except Exception as e:
-            logging.error(f"Fail try to generate symmetric key: {e}")
+        self.key = os.urandom(length // 8)
 
     def get_key_bytes(self) -> bytes:
         """
