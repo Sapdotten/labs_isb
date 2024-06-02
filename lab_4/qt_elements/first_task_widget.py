@@ -8,6 +8,8 @@ from PyQt5.QtWidgets import (
     QProgressBar,
     QHBoxLayout
 )
+from PyQt5.QtCore import Qt
+
 from qt_elements.third_task_widget import MatplotlibWidget
 
 
@@ -40,6 +42,7 @@ class GetCardNumberWidget(QWidget):
 
         self.result_label = QLabel()
         self.result_label.setText("Здесь отобразится результат")
+        self.result_label.setTextInteractionFlags(Qt.TextSelectableByMouse)
         self.result_label.hide()
 
         self.saved_to_label = QLabel()
@@ -68,6 +71,7 @@ class GetCardNumberWidget(QWidget):
         self.left_layout_v.addWidget(self.numbers)
         self.left_layout_v.addWidget(self.type_card_box)
         self.left_layout_v.addWidget(self.bank_box)
+        self.left_layout_v.addStretch()
         self.left_layout_v.addWidget(self.progressbar)
         self.left_layout_v.addWidget(self.result_label)
         self.left_layout_v.addWidget(self.saved_to_label)

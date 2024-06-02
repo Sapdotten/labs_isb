@@ -32,6 +32,7 @@ class TestLuhnAlgorithm(QWidget):
         self.main_layout_v.addWidget(self.label)
         self.main_layout_v.addWidget(self.sequence)
         self.main_layout_v.addWidget(self.result_label)
+        self.main_layout_v.addStretch()
         self.main_layout_v.addWidget(self.result_button)
         self.main_layout_v.addWidget(self.menu_button)
 
