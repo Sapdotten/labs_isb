@@ -1,7 +1,9 @@
 import time
+
 from PyQt5 import QtCore
-import multiprocessing as mp
+
 from tools.card_hash import CardHash
+from tools.statistics import Statistics
 
 
 class SlowTask(QtCore.QThread):
@@ -40,3 +42,19 @@ class CalculateCardNumber(QtCore.QThread):
         self.calculated = self.hash.calculated
         self.ended = True
         self.card_number = self.hash.card_number
+
+
+class CalculateStatistics(QtCore.QThread):
+    def __init__(self, *args, **kwargs):
+        super(CalculateStatistics, self).__init__(*args, **kwargs)
+        self.ended = False
+        self.stats = Statistics()
+        self.x = []
+        self.y = []
+
+    def set_card_data(self, hash: str, card_type: str, bank: str, numbers: str):
+        self.stats.set_card_data(hash, card_type, bank, numbers)
+
+    def run(self):
+        self.x, self.y = self.stats.calculate_stats()
+        self.ended = True

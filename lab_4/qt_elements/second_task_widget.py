@@ -1,7 +1,11 @@
-from PyQt5.QtWidgets import QPushButton, QLabel, QVBoxLayout, \
-    QWidget, QComboBox, QLineEdit, QProgressBar, QMessageBox
-
-from lab_4.tools.luhn_algorithm import Luhn
+from PyQt5.QtWidgets import (
+    QPushButton,
+    QLabel,
+    QVBoxLayout,
+    QWidget,
+    QLineEdit
+)
+from tools.luhn_algorithm import Luhn
 
 
 class TestLuhnAlgorithm(QWidget):

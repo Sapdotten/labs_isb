@@ -1,8 +1,9 @@
-from PyQt5.QtWidgets import QPushButton, QApplication, QFileDialog, QMainWindow, QLabel, QHBoxLayout, QVBoxLayout, \
-    QWidget, \
-    QMessageBox
-
-import sys
+from PyQt5.QtWidgets import (
+    QPushButton,
+    QLabel,
+    QVBoxLayout,
+    QWidget,
+)
 
 
 class MenuWidget(QWidget):
@@ -24,6 +25,3 @@ class MenuWidget(QWidget):
         self.main_layout_v.addWidget(self.label)
         self.main_layout_v.addWidget(self.button_first_task)
         self.main_layout_v.addWidget(self.button_second_task)
-        self.main_layout_v.addWidget(self.button_third_task)
-
-
