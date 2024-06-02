@@ -1,14 +1,8 @@
-from PyQt5.QtWidgets import QPushButton, QApplication, QFileDialog, QMainWindow, QLabel, QHBoxLayout, QVBoxLayout, \
-    QWidget, \
-    QMessageBox
-
-import sys
-import sys
 import time
-from PyQt5 import QtCore, QtWidgets
-from lab_4.bank_card import BankCardIterator
+from PyQt5 import QtCore
+from lab_4.tools.bank_card import BankCardIterator
 import multiprocessing as mp
-from lab_4.card_hash import CardHash
+from lab_4.tools.card_hash import CardHash
 
 
 class SlowTask(QtCore.QThread):

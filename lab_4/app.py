@@ -1,9 +1,10 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QProgressBar, QMessageBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from lab_4.main_menu_widget import MenuWidget
 from first_task_widget import GetCardNumberWidget
+from second_task_widget import TestLuhnAlgorithm
 import sys
-from file_service import FileService
-from consts import BINS_FILE, CARD_NUMBER_FILE
+from lab_4.tools.file_service import FileService
+from lab_4.tools.consts import BINS_FILE, CARD_NUMBER_FILE
 from workers import SlowTask, CalculateCardNumber
 
 
@@ -19,6 +20,7 @@ class MyApp(QMainWindow):
     def init_menu_widget(self):
         self.menu = MenuWidget()
         self.menu.button_first_task.clicked.connect(self.go_to_fisrt_task)
+        self.menu.button_second_task.clicked.connect(self.go_to_second_task)
 
     def init_first_task_widget(self):
         self.first_task_widget = GetCardNumberWidget()
@@ -32,10 +34,19 @@ class MyApp(QMainWindow):
 
         self.first_task_widget.result_button.clicked.connect(self.calculate_card_number)
 
+    def init_second_task_widget(self):
+        self.second_task_widget = TestLuhnAlgorithm()
+        self.second_task_widget.menu_button.clicked.connect(self.go_to_menu)
+        self.second_task_widget.result_button.clicked.connect(self.check_luhn)
 
     def go_to_fisrt_task(self):
         self.init_first_task_widget()
         self.setCentralWidget(self.first_task_widget)
+        self.show()
+
+    def go_to_second_task(self):
+        self.init_second_task_widget()
+        self.setCentralWidget(self.second_task_widget)
         self.show()
 
     def go_to_menu(self):
@@ -56,9 +67,8 @@ class MyApp(QMainWindow):
             else:
                 QMessageBox.critical(self, "Неудача", "Не удалось подобрать номер карты(")
 
-
     def calculate_card_number(self):
-        if len(self.first_task_widget.hash.text()) == 0:
+        if len(self.first_task_widget.sequence.text()) == 0:
             QMessageBox.critical(self, "Ошибка", "Введите значение хэша!")
         elif len(self.first_task_widget.numbers.text()) != 4:
             QMessageBox.critical(self, "Ошибка", "Что-то не так с количеством последних цифр...")
@@ -72,13 +82,21 @@ class MyApp(QMainWindow):
             self.task = SlowTask(self)
             self.task.updated.connect(self.on_update_progress_bar)
             self.process_card_num = CalculateCardNumber()
-            self.process_card_num.set_card_data(self.first_task_widget.hash.text(),
+            self.process_card_num.set_card_data(self.first_task_widget.sequence.text(),
                                                 self.first_task_widget.type_card_box.currentText(),
                                                 self.first_task_widget.bank_box.currentText(),
                                                 self.first_task_widget.numbers.text())
             self.first_task_widget.progressbar.show()
             self.task.start()
             self.process_card_num.start()
+
+    def check_luhn(self):
+        if len(self.second_task_widget.sequence.text()) <= 1:
+            QMessageBox.critical(self, "Ошибка", "Последовательность должна содержать не менее 2х цифр")
+        elif not self.second_task_widget.sequence.text().isdecimal():
+            QMessageBox.critical(self, "Ошибка", "Последовательность должна состоять из цифр")
+        else:
+            self.second_task_widget.check_luhn()
 
 
 if __name__ == '__main__':
