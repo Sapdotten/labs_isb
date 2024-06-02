@@ -31,7 +31,6 @@ class TestLuhnAlgorithm(QWidget):
         self.main_layout_v.addWidget(self.result_button)
         self.main_layout_v.addWidget(self.menu_button)
 
-
     def check_luhn(self):
         if Luhn.check(self.sequence.text()):
             self.result_label.setText("Последовательность корректная")

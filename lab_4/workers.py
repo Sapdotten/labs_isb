@@ -1,8 +1,7 @@
 import time
 from PyQt5 import QtCore
-from lab_4.tools.bank_card import BankCardIterator
 import multiprocessing as mp
-from lab_4.tools.card_hash import CardHash
+from tools.card_hash import CardHash
 
 
 class SlowTask(QtCore.QThread):
@@ -29,24 +28,15 @@ class CalculateCardNumber(QtCore.QThread):
     def __init__(self, *args, **kwargs):
         super(CalculateCardNumber, self).__init__(*args, **kwargs)
         self.ended = False
-        self.card = None
         self.hash = None
         self.calculated = False
         self.card_number = None
 
     def set_card_data(self, hash: str, card_type: str, bank: str, numbers: str):
-        self.hash = CardHash(hash)
-        self.card = BankCardIterator(card_type, bank, numbers)
+        self.hash = CardHash(hash, card_type, bank, numbers)
 
     def run(self):
-        cores = mp.cpu_count()
-        with mp.Pool(processes=cores) as p:
-            for result, card_num in p.map(self.hash.check, self.card):
-                if result:
-                    self.ended = True
-                    self.calculated = True
-                    self.card_number = card_num
-                    p.terminate()
-
-                    break
+        self.hash.calculate_card_number()
+        self.calculated = self.hash.calculated
         self.ended = True
+        self.card_number = self.hash.card_number

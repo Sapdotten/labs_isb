@@ -3,8 +3,8 @@ from lab_4.main_menu_widget import MenuWidget
 from first_task_widget import GetCardNumberWidget
 from second_task_widget import TestLuhnAlgorithm
 import sys
-from lab_4.tools.file_service import FileService
-from lab_4.tools.consts import BINS_FILE, CARD_NUMBER_FILE
+from tools.file_service import FileService
+from tools.consts import BINS_FILE, CARD_NUMBER_FILE
 from workers import SlowTask, CalculateCardNumber
 
 
@@ -23,6 +23,7 @@ class MyApp(QMainWindow):
         self.menu.button_second_task.clicked.connect(self.go_to_second_task)
 
     def init_first_task_widget(self):
+
         self.first_task_widget = GetCardNumberWidget()
         self.first_task_widget.menu_button.clicked.connect(self.go_to_menu)
 
@@ -68,7 +69,8 @@ class MyApp(QMainWindow):
                 QMessageBox.critical(self, "Неудача", "Не удалось подобрать номер карты(")
 
     def calculate_card_number(self):
-        if len(self.first_task_widget.sequence.text()) == 0:
+
+        if len(self.first_task_widget.hash.text()) == 0:
             QMessageBox.critical(self, "Ошибка", "Введите значение хэша!")
         elif len(self.first_task_widget.numbers.text()) != 4:
             QMessageBox.critical(self, "Ошибка", "Что-то не так с количеством последних цифр...")
@@ -80,9 +82,10 @@ class MyApp(QMainWindow):
             QMessageBox.critical(self, "Ошибка", "Вы не ввели банк карты!")
         else:
             self.task = SlowTask(self)
+
             self.task.updated.connect(self.on_update_progress_bar)
             self.process_card_num = CalculateCardNumber()
-            self.process_card_num.set_card_data(self.first_task_widget.sequence.text(),
+            self.process_card_num.set_card_data(self.first_task_widget.hash.text(),
                                                 self.first_task_widget.type_card_box.currentText(),
                                                 self.first_task_widget.bank_box.currentText(),
                                                 self.first_task_widget.numbers.text())
