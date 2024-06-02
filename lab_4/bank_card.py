@@ -12,9 +12,9 @@ class BankCardIterator:
     FREE_PART_LEN = 10
 
     def __init__(self, card_type: str, bank: str):
-        BINS = FileService.read_json(self.BINS_FILE)
+        bins = FileService.read_json(self.BINS_FILE)
         try:
-            self.bins = BINS[card_type][bank]
+            self.bins = bins[card_type][bank]
         except KeyError:
             logging.error("Uncorrect type of card or bank")
 
@@ -36,5 +36,3 @@ class BankCardIterator:
         else:
             self.current_free_sequence = '0' * zeros_count + next_sequence
         return result
-
-
