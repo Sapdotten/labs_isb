@@ -1,7 +1,7 @@
 import logging
 
-from file_service import FileService
-from consts import BINS_FILE
+from tools.file_service import FileService
+from tools.consts import BINS_FILE
 
 
 class BankCardIterator:
